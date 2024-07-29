@@ -11,13 +11,17 @@ const getUserBlog = userId =>
   );
 
 export const getUsersBlogs = async arrOfUsers => {
-  const arrOfPromise = arrOfUsers.reduce((acc, user) => {
-    return [...acc, getUserBlog(user)];
-  }, []);
+  try {
+    const arrOfPromise = arrOfUsers.reduce((acc, user) => {
+      return [...acc, getUserBlog(user)];
+    }, []);
 
-  const allUsers = await Promise.all(arrOfPromise);
-  const arrOfLinks = allUsers.map(({ blog }) => blog);
-  return arrOfLinks;
+    const allUsers = await Promise.all(arrOfPromise);
+    const arrOfLinks = allUsers.map(({ blog }) => blog);
+    return arrOfLinks;
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 // examples
